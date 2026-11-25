@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
@@ -24,15 +25,16 @@ jobs:
       - name: Extraer proyecto
         run: |
           unzip -o "FUCHIBOL_MOBILE_V0_7_0_COMPLETO-1.zip" -d .
-          test -f settings.gradle
-          test -f app/build.gradle
+          test -f FUCHIBOL_MOBILE_V0_7_0/settings.gradle
+          test -f FUCHIBOL_MOBILE_V0_7_0/app/build.gradle
 
       - name: Compilar APK debug
+        working-directory: FUCHIBOL_MOBILE_V0_7_0
         run: gradle assembleDebug
 
       - name: Publicar APK
         uses: actions/upload-artifact@v4
         with:
           name: FUCHIBOL-Mobile-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: FUCHIBOL_MOBILE_V0_7_0/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
